@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="2">
+        <thead>
+            <tr>
+                <th onclick="sortrecipes('id')">Id</th>
+                <th onclick="sortrecipes('name')">ReciepeName</th>
+                <th onclick="sortrecipes('caloriesPerServing')">Calories</th>
+                <th onclick="sortrecipes('rating')">Rating</th>
+                <th onclick="sortrecipes('prepTimeMinutes')">PreparationTime</th>
+                <th onclick="sortrecipes('cookTimeMinutes')">CookingTime</th>
+            </tr>
+        </thead>
+        <tbody id="recipes"></tbody>
+    </table>
+    <button onclick="Prevset()">Previous</button>
+    <button onclick="Nextset()">Next</button>
+    
+    <script>
+     var s=0;
+       function getRecipes(s){
+        fetch("https://dummyjson.com/recipes?limit=10&skip="+s)
+        .then((res) =>res.json())
+        .then((data)=>{console.log(data.recipes)
+            genRecipes(data.recipes)
+        }
+     )
+    } 
+    
+    function genRecipes(recipes){
+         document.querySelector("tbody").innerHTML=""
+        recipes.forEach(recipe => {
+           
+            var ntd = ` <tr>
+                <td>${recipe.id}</td>
+                <td>${recipe.name}</td>
+                <td>${recipe.caloriesPerServing}</td>
+                <td>${recipe.rating}</td>
+                <td>${recipe.prepTimeMinutes}</td>
+                <td>${recipe.cookTimeMinutes}</td>
+            </tr>`
+            document.querySelector("tbody").innerHTML += ntd
+            
+        });
+    }
+    function Nextset(){
+        
+         s=s+10;
+         console.log(s)
+        getRecipes(s)
+    }
+    function Prevset(){
+         s=s-10;
+         console.log(s);
+        getRecipes(s)
+    }
+    //function sortbycalories(){
+    //    fetch("https://dummyjson.com/recipes?limit=10&skip="+s)
+    //    .then((res) =>res.json())
+    //    .then((data)=>{console.log(data.recipes)
+    //      var sorted=data.recipes.sort((a,b) => a.caloriesPerServing - b.caloriesPerServing)
+    //        genRecipes(sorted)
+  //}
+    // )
+   // }
+    function sortrecipes(sortby){
+        fetch("https://dummyjson.com/recipes?limit=10&skip="+s)
+        .then((res) =>res.json())
+        .then((data)=>{console.log(data.recipes)
+            var sorted=data.recipes.sort((a,b) => a[sortby] < b[sortby] ? -1 : a[sortby] > b[sortby] ? 1 : 0)
+            genRecipes(sorted)
+        })
+    }
+    // function sortrecipe(sortby){
+      //  fetch("https://dummyjson.com/recipes?limit=10&skip="+s)
+       // .then((res) =>res.json())
+       // .then((data)=>{console.log(data.recipes)
+        //    var sorted=data.recipes.sort((a,b) => a[sortby].localeCompare(b[sortby]))
+        //    genRecipes(sorted)
+       // })
+     //}
+    getRecipes(s)
+    </script>
+</body>
+</html>
