@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+       const root = ReactDOM.createRoot(document.getElementById('root'));    
+     function fetchRecipes() {
+        .then((res) =>res.json())       
+        .then((data)=>{console.log(data.recipes)
+            const rec = data.recipes;})
+
+            const stable=(<table border="2">
+                        <thead>{
+                        <tr>(
+                            <th>Id</th>
+                            <th>ReciepeName</th>
+                            <th>Calories</th>
+                            <th>Rating</th>
+                            <th>PreparationTime</th>
+                            <th>CookingTime</th>
+                        )                        
+                        </tr>}
+                        </thead>
+            <tbody id="recipes">
+                {
+                rec.map((recipe)=>{
+                return <tr key={recipe.id}>
+                    (
+                        <td>{recipe.id}</td>
+                        <td>{recipe.name}</td>
+                        <td>{recipe.caloriesPerServing}</td>
+                        <td>{recipe.rating}</td>
+                        <td>{recipe.prepTimeMinutes}</td>
+                        <td>{recipe.cookTimeMinutes}</td>
+                )
+                    </tr>
+                }) 
+            }
+             </tbody>
+            
+
+    </table>) 
+    root.render(stable);}
+
+         
+        // const root = ReactDOM.createRoot(document.getElementById('root'));
+        // ReactDOM.render(stable,document.getElementById('root'))
+
+        </script>
+ 
+                    </body>
+                    </html>
+            
+          
